@@ -1,0 +1,266 @@
+body{
+    background: linear-gradient(149deg, rgba(2,9,51,1) 5%, rgba(140,5,20,1) 61%, rgba(187,79,10,0.8939950980392157) 100%);
+}
+
+#titulo{
+    display: flex;
+    color: #ffba08;
+    font-family: 'Silkscreen', cursive; 
+}
+
+#titulo h1{
+    width: 100%;
+    margin-left: 0.5em;
+}
+
+.containerErrores{
+    font-family: 'Raleway', sans-serif;
+    margin-left: 20px;
+    color: #ffba08;
+    display: none;
+    justify-content: center;
+}
+
+.input_select {
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    -ms-appearance:none;
+    appearance:none;
+    outline:0;
+    box-shadow:none;
+    border:0!important;
+    background: #03071e;
+    background-image: none;
+    flex: 1;
+    padding: 0 .5em;
+    color:#ffba08;
+    cursor:pointer;
+    font-size: 1em;
+    font-family: 'Raleway', sans-serif;
+ }
+.input_select::-ms-expand {
+    display: none;
+ }
+
+.input_select {
+    position: relative;
+    display: flex;
+    width: 20em;
+    height: 3em;
+    line-height: 3;
+    background: #03071e;
+    overflow: hidden;
+    border-radius: .25em;
+ }
+.input_select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 1em;
+    background: #2b2e2e;
+    cursor:pointer;
+    pointer-events:none;
+    transition:.25s all ease;
+ }
+.input_select:hover::after {
+    color: #23b499;
+ }
+
+.input_select{
+    font-family: 'Raleway', sans-serif;
+    margin-left: 15px;
+}
+
+#textbox_calculo{
+    width: 10em;
+    line-height: 2;
+    background: #03071e;
+    overflow: hidden;
+    border-radius: .25em;
+    margin-left: 15px;
+    color:#ffba08;
+    font-family: 'Raleway', sans-serif;
+    text-align: center;
+    font-weight: bold;
+}
+
+.button_style {
+  background-color: #ffba08;
+  border-radius: 100px;
+  color: #03071e;
+  cursor: pointer;
+  display: inline-block;
+  font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+  padding: 7px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 250ms;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin: 10px;
+}
+
+.button_style:hover {
+  transform: scale(1.05) rotate(-1deg);
+}
+
+.tituloInline{
+    font-family: 'Raleway', sans-serif;
+    margin-left: 20px;
+    color: #ffba08;
+}
+
+#selector_columnas{
+    font-family: 'Fredoka One', cursive;
+    display: flex;
+    color: #faa307;
+    justify-content: center;
+    padding: 20px;
+    max-width:fit-content;
+    margin: 10px;
+    box-shadow: 10px 5px 5px #ffba08;   
+}
+
+table th{
+    font-family: 'Fredoka One', cursive;
+    background-color: #03071e;
+    border: solid 1px #ffba08;
+    cursor:pointer;
+    color: #ffba08;
+}
+table{
+    border: 1;
+    margin-top: 40px;
+}
+
+td{
+    border: solid 1px #ffba08;
+    text-align: -internal-center;
+    text-align: center;
+    width: 100px;
+}
+
+tr:hover{
+    background-color:#03071e;
+}
+
+table {
+    border-spacing: 0px;
+    height: auto;
+    font-family: 'Raleway', sans-serif;
+    color: #ffba08;
+}
+
+#agregar_btn{
+    margin: 20px;
+}
+
+#select_tipo{
+    width: auto;
+}
+
+.label_formulario{
+    display: block;
+}
+
+#formularioAlta{
+    display: grid;
+    grid-template-columns: repeat(2, 300px);
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    column-gap: 10px;
+    row-gap: 20px;
+}
+.input_alta_heroe{
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    row-gap: 20px;
+
+}
+.input_alta_villano{
+
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    row-gap: 20px;
+}
+
+form{
+    width: 50%;
+    margin: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(3.8px);
+    -webkit-backdrop-filter: blur(5.8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    font-family: 'Silkscreen', cursive; 
+    color: #ffba08;
+}
+
+form input{
+    line-height: 2;
+    background: #03071e;
+    overflow: hidden;
+    border-radius: .25em;
+    margin-left: 15px;
+    color:#ffba08;
+    font-family: 'Raleway', sans-serif;
+    text-align: center;
+    font-weight: bold;
+}
+
+.container_botones{
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+#titulo_form{
+    display: flex;
+    justify-content: center;
+}
+
+#mensaje_error{
+    font-family: 'Raleway', sans-serif;
+    color: #ffba08;
+    font-style: italic;
+    justify-content: center;
+    display: none;
+}
+
+.spinner{
+    display: flex;
+    position: absolute;
+    align-items: center;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.7;
+}
+
+.spinnerItem{
+    margin: auto;
+}
+
+.containerErrores{
+    background-color: black;
+    font-size: large;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+

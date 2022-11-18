@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="iconoBatman.ico">
+    <!--Fuentes-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <title>Simulacro primer parcial</title>
+</head>
+<body>
+    <div class="spinner" id="spinnerId">
+        <img src="./1495.gif" class="spinnerItem"> 
+    </div>
+    <div class="main_container" id="mainCointaner">
+        <div class="container_tabla">
+        <div id="titulo">
+            <h1>Formulario de Datos</h1>
+            <h3>Ignacio Martín Smirlian</h3>
+        </div>
+        <div class="containerErrores" id="etiquetaErrores">
+            <h1>Error!</h1>
+        </div>
+        <div id="fitros">
+            <h3 id="titulo_filtro" class="tituloInline">Filtrar por: </h3>
+            <select id="select_filtro" class="input_select">
+                <option value="todos">Todos</option>
+                <option value="heroes">Heroes</option>
+                <option value="villanos">Villanos</option>
+            </select>
+        </div>
+        <div id="calulo">
+            <h3 id="titulo_calculo" class="tituloInline"> Calcular Edad Promedio</h3>
+            <input type="text" id="textbox_calculo">
+            <button id="calcular_btn" class="button_style">Calcular</button>
+        </div>
+            <div>
+                <table id="tabla">
+                </table>
+            </div>
+        </div>
+        <div class="container_formulario">
+            <h3 class="tituloInline" id="titulo_form"> Formulario ABM</h3>
+            <form id="formularioAlta">            
+                <label class="label_formulario">ID</label>
+                <input type="text" id="input_id" disabled="true">
+                <label class="label_formulario">Nombre:</label>
+                <input type="text" id="input_nombre">
+                <label class="label_formulario">Apellido:</label>
+                <input type="text" id="input_apellido">
+                <label class="label_formulario">Edad:</label>
+                <input type="text" id="input_edad">
+                <label class="label_formulario">Tipo:</label>
+                <select id="select_tipo" class="input_select">
+                    <option value="heroes">Heroes</option>
+                    <option value="villanos">Villanos</option>
+                </select>  
+                <div class="input_alta_heroe">          
+                    <label class="label_formulario">Alter ego:</label>
+                    <input type="text" id="input_alterEgo">
+                    <label class="label_formulario">Ciudad: </label>
+                    <input type="text" id="input_ciudad" >
+                    <label class="label_formulario">Publicado: </label>
+                    <input type="text" id="input_publicacion">
+                </div> 
+                <div class="input_alta_villano">
+                    <label class="label_formulario">Enemigo :</label>
+                    <input type="text" id="input_enemigo">
+                    <label class="label_formulario">Robos:</label>
+                    <input type="text" id="input_robos">
+                    <label class="label_formulario">Asesinatos:</label>
+                    <input type="text" id="input_asesinatos">
+                </div>
+            </form>
+            <h2 id="mensaje_error"></h2>
+            <div class="container_botones">         
+                <button id="alta_btn" class="button_style">Alta</button>
+                <button id="modificar_btn" class="button_style">Modificar</button>
+                <button id="eliminar_btn" class="button_style">Eliminar</button>
+                <button id="cancelar_btn" class="button_style">Cancelar</button>
+            </div>
+        </div>
+    </div>    
+    <button id="agregar_btn" class="button_style"> Agregar </button>
+</body>
+<script src="App.js"></script>
+
+</html>
