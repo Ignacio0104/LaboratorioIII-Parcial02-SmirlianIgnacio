@@ -41,7 +41,7 @@ function traerVehiculos()
 };
 
 
-function traerPersonajes(){
+function cargarVehiculo(vehiculo){
     MostrarSpinner(true);
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
@@ -49,21 +49,23 @@ function traerPersonajes(){
         {
             if(xhttp.status == 200 )
             {
-                console.log(xhttp.response)
-                arrayJson = JSON.parse(xhttp.response); 
+                console.log(xhttp.response);
                 MostrarSpinner(false);
-                CargaInformacionJSON();      
+                vehiculo.id = JSON.parse(xhttp.response)["id"];
+                arrayVehiculos.push(vehiculo); 
+                MostrarOcultarForm();
             }else{
                 MostrarSpinner(false);
                 formularioVisible=true;
                 MostrarOcultarForm();
-                mensajeErrorForm.innerText="Error, no se pudo leer la base de datos";
+                mensajeErrorForm.innerText="Error, no se pudo realizar el alta";
                     mensajeErrorForm.style.display= "flex";   
             }
         }     
     };
-xhttp.open("GET","http://localhost/personajes.php",true,"usuarios","pass");
-xhttp.send();
+xhttp.open("PUT","http://localhost/vehiculoAereoTerrestre.php",true);
+xhttp.setRequestHeader('Content-Type' , 'application/json');
+xhttp.send(JSON.stringify(vehiculo));
 };
 
 
@@ -193,7 +195,7 @@ function CargaInformacionJSON()
 
 //ABM
 
-function ValidarCampos(id,modelo,anoFab,velMax,altaMax,autonomia,publicado,enemigo,robos,asesinatos)
+function ValidarCampos(id,modelo,anoFab,velMax,altaMax,autonomia,cantPue,cantRue)
 {
     if(id==""||isNaN(id)||id<1){
         etiquetaError.style.display="flex";
@@ -210,12 +212,12 @@ function ValidarCampos(id,modelo,anoFab,velMax,altaMax,autonomia,publicado,enemi
         etiquetaError.innerText="Revisar el Ano de fabricacion";
         return false;
     }
-    if(isNaN(edad)||velMax<1){
+    if(isNaN(velMax)||velMax<1){
         etiquetaError.style.display="flex";
         etiquetaError.innerText="Revisar la velocidad maxima";
         return false;
     }
-    if(comboBoxAlta.value == "aereoes")
+    if(comboBoxAlta.value == "aereos")
     {
         if(isNaN(altaMax)||altaMax<1){
             etiquetaError.style.display="flex";
@@ -226,29 +228,19 @@ function ValidarCampos(id,modelo,anoFab,velMax,altaMax,autonomia,publicado,enemi
             etiquetaError.style.display="flex";
             etiquetaError.innerText="Revisar la autonomia";
             return false;
-        }
-        if(publicado<1940||isNaN(publicado)){
-            etiquetaError.style.display="flex";
-            etiquetaError.innerText="Revisar la publicación";
-            return false;
-        }    
+        }  
     }else
     {
-        if(enemigo==""||!isNaN(enemigo)){
+        if(isNaN(cantPue)||cantPue<1){
             etiquetaError.style.display="flex";
-            etiquetaError.innerText="Revisar el enemigo";
+            etiquetaError.innerText="Revisar la cantidad de puertas";
             return false;
-        }
-        if(robos<1||isNaN(robos)){
+        }  
+        if(isNaN(cantRue)||cantRue<1){
             etiquetaError.style.display="flex";
-            etiquetaError.innerText="Revisar los robos";
+            etiquetaError.innerText="Revisar la cantidad de ruedas";
             return false;
-        }
-        if(asesinatos<1||isNaN(asesinatos)){
-            etiquetaError.style.display="flex";
-            etiquetaError.innerText="Revisar los asesinatos";
-            return false;
-        }
+        }  
     }
     etiquetaError.style.display="none";
    return true;
@@ -289,27 +281,27 @@ function AltaModificacion()
     let anoFab = parseInt(document.getElementById("input_anoFab").value);
     let velMax = document.getElementById("input_velocidadMax").value;
     let altMax = document.getElementById("input_altMax").value;
-    let autonomia = document.getElementById("input_autonomia");
+    let autonomia = document.getElementById("input_autonomia").value;
     let cantPue = document.getElementById("input_cantPue").value;
     let cantRue = document.getElementById("input_cantRue").value;
-    if(ValidarCampos(EncontrarUltimoId()+1,nombre,apellido,edad,alterego,ciudad,publicado,enemigo,robos,asesinatos))
+    if(ValidarCampos(EncontrarUltimoId()+1,modelo,anoFab,velMax,altMax,autonomia,cantPue,cantRue))
     {
-        if(comboBoxAlta.value == "heroes")
+        if(comboBoxAlta.value == "aereos")
         {
             if(id=="")
             {
-                let HeroeAux = new Heroe(EncontrarUltimoId() + 1, nombre,apellido,edad,alterego,ciudad,publicado);
-                cargarPersonaje(HeroeAux);
+                let AereoAux = new Aereo(EncontrarUltimoId() + 1, modelo,anoFab,velMax,altMax,autonomia);
+                cargarVehiculo(AereoAux);
             }else{
-                let heroeModificar = arrayVehiculos.filter(element=>element.id==id);
-                modificarPersonaje(heroeModificar[0],[nombre,apellido,edad,alterego,ciudad,publicado]);
+                let AeroModificar = arrayVehiculos.filter(element=>element.id==id);
+                modificarVehiculo(heroeModificar[0],[nombre,apellido,edad,alterego,ciudad,publicado]);
             }
         }else
         {
             if(id=="")
             {            
-                let VillanoAux = new Villano(nombre,apellido,edad,enemigo,robos,asesinatos);
-                cargarPersonaje(VillanoAux);
+                let TerrestreAux = new Terrestre(EncontrarUltimoId() + 1,modelo,anoFab,velMax,cantPue,cantRue);
+                cargarVehiculo(TerrestreAux);
             }else{
                 let VillanoModificar = arrayVehiculos.filter(element=>{ if(element.id==id) return element});
                 modificarPersonaje(VillanoModificar[0],[nombre,apellido,edad,enemigo,robos,asesinatos]);
