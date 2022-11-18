@@ -69,10 +69,10 @@ xhttp.send(JSON.stringify(vehiculo));
 };
 
 
-async function modificarPersonaje(personaje,atributos)
+async function modificarVehiculo(vehiculo,atributos)
 {
     MostrarSpinner(true);
-    let consulta = await fetch('http://localhost/personajes.php',{
+    let consulta = await fetch('http://localhost/vehiculoAereoTerrestre.php',{
         method: "POST",
         mode: "cors",
         cache: "no-cache",
@@ -82,12 +82,12 @@ async function modificarPersonaje(personaje,atributos)
         },
         redirect: "follow",
         referrerPolicy : "no-referrer",
-        body: JSON.stringify(personaje)
+        body: JSON.stringify(vehiculo)
     });
     let texto = await consulta.text();
-    if(consulta.status==400)
+    if(consulta.status!=400)
     {
-        personaje.ActualizarDatos(atributos[0],atributos[1],atributos[2],atributos[3],atributos[4],atributos[5]);
+        vehiculo.ActualizarDatos(atributos[0],atributos[1],atributos[2],atributos[3],atributos[4],atributos[5]);
         MostrarOcultarForm();      
         MostrarSpinner(false);
     }else{
@@ -101,10 +101,10 @@ async function modificarPersonaje(personaje,atributos)
     }
 }
 
-async function eliminarPersonaje(personaje,indice)
+async function eliminarVehiculo(vehiculo,indice)
 {
     MostrarSpinner(true);
-    let consulta = await fetch('http://localhost/personajes.php',{
+    let consulta = await fetch('http://localhost/vehiculoAereoTerrestre.php',{
         method: "DELETE",
         mode: "cors",
         cache: "no-cache",
@@ -114,7 +114,7 @@ async function eliminarPersonaje(personaje,indice)
         },
         redirect: "follow",
         referrerPolicy : "no-referrer",
-        body: JSON.stringify(personaje)
+        body: JSON.stringify(vehiculo)
     });
     let texto = await consulta.text();
     if(consulta.status!=400)
@@ -267,7 +267,7 @@ function EliminarRegistro()
     for (let index = 0; index < arrayVehiculos.length; index++) {
         if(arrayVehiculos[index].id == id)
         {
-            eliminarPersonaje(arrayVehiculos[index],index);
+            eliminarVehiculo(arrayVehiculos[index],index);
             break;
         }  
     }
@@ -293,8 +293,8 @@ function AltaModificacion()
                 let AereoAux = new Aereo(EncontrarUltimoId() + 1, modelo,anoFab,velMax,altMax,autonomia);
                 cargarVehiculo(AereoAux);
             }else{
-                let AeroModificar = arrayVehiculos.filter(element=>element.id==id);
-                modificarVehiculo(heroeModificar[0],[nombre,apellido,edad,alterego,ciudad,publicado]);
+                let AereoModificar = arrayVehiculos.filter(element=>element.id==id);
+                modificarVehiculo(AereoModificar[0],[modelo,anoFab,velMax,altMax,autonomia]);
             }
         }else
         {
@@ -303,8 +303,8 @@ function AltaModificacion()
                 let TerrestreAux = new Terrestre(EncontrarUltimoId() + 1,modelo,anoFab,velMax,cantPue,cantRue);
                 cargarVehiculo(TerrestreAux);
             }else{
-                let VillanoModificar = arrayVehiculos.filter(element=>{ if(element.id==id) return element});
-                modificarPersonaje(VillanoModificar[0],[nombre,apellido,edad,enemigo,robos,asesinatos]);
+                let terrestreModificar = arrayVehiculos.filter(element=>{ if(element.id==id) return element});
+                modificarVehiculo(terrestreModificar[0],[modelo,anoFab,velMax,cantPue,cantRue]);
             }
         }
     }
@@ -324,22 +324,20 @@ function AbrirFormModificacion(fila,tipo)
 {
     if(fila.cells[4].innerText=="N/A")
     {
-        comboBoxAlta.value="villanos";
+        comboBoxAlta.value="terrestres";
     }else{
-        comboBoxAlta.value="heroes";
+        comboBoxAlta.value="aereos";
     }
     comboBoxAlta.disabled = true;
     MostrarOcultarForm()
     document.getElementById("input_id").value= fila.cells[0].innerText;
-    document.getElementById("input_nombre").value =fila.cells[1].innerText;
-    document.getElementById("input_apellido").value =fila.cells[2].innerText;
-    document.getElementById("input_edad").value=fila.cells[3].innerText;
-    document.getElementById("input_alterEgo").value=fila.cells[4].innerText;
-    document.getElementById("input_ciudad").value=fila.cells[5].innerText;
-    document.getElementById("input_publicacion").value=fila.cells[6].innerText;
-    document.getElementById("input_enemigo").value=fila.cells[7].innerText;
-    document.getElementById("input_robos").value=fila.cells[8].innerText;
-    document.getElementById("input_asesinatos").value=fila.cells[9].innerText;
+    document.getElementById("input_modelo").value =fila.cells[1].innerText;
+    document.getElementById("input_anoFab").value =fila.cells[2].innerText;
+    document.getElementById("input_velocidadMax").value=fila.cells[3].innerText;
+    document.getElementById("input_altMax").value=fila.cells[4].innerText;
+    document.getElementById("input_autonomia").value=fila.cells[5].innerText;
+    document.getElementById("input_cantPue").value=fila.cells[6].innerText;
+    document.getElementById("input_cantRue").value=fila.cells[7].innerText;
     botonAlta.style.display="none";
     botonCancelar.style.display="none";
     if(tipo==="mod")
