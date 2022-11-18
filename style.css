@@ -176,13 +176,13 @@ table {
     column-gap: 10px;
     row-gap: 20px;
 }
-.input_alta_heroe{
+.input_alta_aereo{
     display: grid;
     grid-template-columns: repeat(2, auto);
     row-gap: 20px;
 
 }
-.input_alta_villano{
+.input_alta_terrestre{
 
     display: grid;
     grid-template-columns: repeat(2, auto);

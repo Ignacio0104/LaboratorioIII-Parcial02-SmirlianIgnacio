@@ -117,7 +117,7 @@ async function eliminarPersonaje(personaje,indice)
     let texto = await consulta.text();
     if(consulta.status!=400)
     {
-        arrayPersonas.splice(indice,1);
+        arrayVehiculos.splice(indice,1);
         MostrarOcultarForm();      
         MostrarSpinner(false);
     }else{
@@ -164,11 +164,10 @@ function MostrarSpinner(bool)
 }
 
 //Asignacion de listeners
-window.addEventListener("load",traerPersonajes);
+window.addEventListener("load",traerVehiculos);
 window.addEventListener("load",CargarTablas);
 comboBox.addEventListener("change",CargarTablas)
 comboBoxAlta.addEventListener("change",OcultarCampos)
-botonCalculo.addEventListener("click",CalcularEdadPromedio);
 botonAgregar.addEventListener("click",MostrarOcultarForm);
 botonAlta.addEventListener("click",AltaModificacion);
 botonModificar.addEventListener("click",AltaModificacion);
@@ -194,38 +193,38 @@ function CargaInformacionJSON()
 
 //ABM
 
-function ValidarCampos(id,nombre,apellido,edad,alterego,ciudad,publicado,enemigo,robos,asesinatos)
+function ValidarCampos(id,modelo,anoFab,velMax,altaMax,autonomia,publicado,enemigo,robos,asesinatos)
 {
-    if(id==""||isNaN(id)){
+    if(id==""||isNaN(id)||id<1){
         etiquetaError.style.display="flex";
         etiquetaError.innerText="Revisar el ID";
         return false;
     }
-    if(nombre==""||!isNaN(nombre)){
+    if(modelo==""||!isNaN(modelo)){
         etiquetaError.style.display="flex";
-        etiquetaError.innerText="Revisar el ID";
+        etiquetaError.innerText="Revisar el Modelo";
         return false;
     }
-    if(apellido==""||!isNaN(apellido)){
+    if(anoFab<1940||isNaN(anoFab)){
         etiquetaError.style.display="flex";
-        etiquetaError.innerText="Revisar el apellido";
+        etiquetaError.innerText="Revisar el Ano de fabricacion";
         return false;
     }
-    if(isNaN(edad)){
+    if(isNaN(edad)||velMax<1){
         etiquetaError.style.display="flex";
-        etiquetaError.innerText="Revisar la edad";
+        etiquetaError.innerText="Revisar la velocidad maxima";
         return false;
     }
-    if(comboBoxAlta.value == "heroes")
+    if(comboBoxAlta.value == "aereoes")
     {
-        if(alterego==""||!isNaN(alterego)){
+        if(isNaN(altaMax)||altaMax<1){
             etiquetaError.style.display="flex";
-            etiquetaError.innerText="Revisar el alter ego";
+            etiquetaError.innerText="Revisar la altura maxima";
             return false;
         }
-        if(ciudad==""||!isNaN(ciudad)){
+        if(isNaN(autonomia)||autonomia<1){
             etiquetaError.style.display="flex";
-            etiquetaError.innerText="Revisar la ciudad";
+            etiquetaError.innerText="Revisar la autonomia";
             return false;
         }
         if(publicado<1940||isNaN(publicado)){
@@ -259,7 +258,7 @@ function EncontrarUltimoId()
 {
     let ultimoId=0;
     console.log(ultimoId);
-    arrayPersonas.forEach(element => {
+    arrayVehiculos.forEach(element => {
         if(element.id>ultimoId)
         {
             ultimoId=element.id;
@@ -273,10 +272,10 @@ function EncontrarUltimoId()
 function EliminarRegistro()
 {
     let id = document.getElementById("input_id").value;
-    for (let index = 0; index < arrayPersonas.length; index++) {
-        if(arrayPersonas[index].id == id)
+    for (let index = 0; index < arrayVehiculos.length; index++) {
+        if(arrayVehiculos[index].id == id)
         {
-            eliminarPersonaje(arrayPersonas[index],index);
+            eliminarPersonaje(arrayVehiculos[index],index);
             break;
         }  
     }
@@ -286,16 +285,14 @@ function AltaModificacion()
 {
     comboBoxAlta.disabled = false;
     let id = document.getElementById("input_id").value;
-    let nombre = document.getElementById("input_nombre").value;
-    let apellido = document.getElementById("input_apellido").value;
-    let edad = parseInt(document.getElementById("input_edad").value);
-    let alterego = document.getElementById("input_alterEgo").value;
-    let ciudad = document.getElementById("input_ciudad").value;
-    let publicado = parseInt(document.getElementById("input_publicacion").value);
-    let enemigo = document.getElementById("input_enemigo").value;
-    let robos = document.getElementById("input_robos").value;
-    let asesinatos = parseInt(document.getElementById("input_asesinatos").value);
-    if(ValidarCampos(EncontrarUltimoId() + 1,nombre,apellido,edad,alterego,ciudad,publicado,enemigo,robos,asesinatos))
+    let modelo = document.getElementById("input_modelo").value;
+    let anoFab = parseInt(document.getElementById("input_anoFab").value);
+    let velMax = document.getElementById("input_velocidadMax").value;
+    let altMax = document.getElementById("input_altMax").value;
+    let autonomia = document.getElementById("input_autonomia");
+    let cantPue = document.getElementById("input_cantPue").value;
+    let cantRue = document.getElementById("input_cantRue").value;
+    if(ValidarCampos(EncontrarUltimoId()+1,nombre,apellido,edad,alterego,ciudad,publicado,enemigo,robos,asesinatos))
     {
         if(comboBoxAlta.value == "heroes")
         {
@@ -304,7 +301,7 @@ function AltaModificacion()
                 let HeroeAux = new Heroe(EncontrarUltimoId() + 1, nombre,apellido,edad,alterego,ciudad,publicado);
                 cargarPersonaje(HeroeAux);
             }else{
-                let heroeModificar = arrayPersonas.filter(element=>element.id==id);
+                let heroeModificar = arrayVehiculos.filter(element=>element.id==id);
                 modificarPersonaje(heroeModificar[0],[nombre,apellido,edad,alterego,ciudad,publicado]);
             }
         }else
@@ -314,7 +311,7 @@ function AltaModificacion()
                 let VillanoAux = new Villano(nombre,apellido,edad,enemigo,robos,asesinatos);
                 cargarPersonaje(VillanoAux);
             }else{
-                let VillanoModificar = arrayPersonas.filter(element=>{ if(element.id==id) return element});
+                let VillanoModificar = arrayVehiculos.filter(element=>{ if(element.id==id) return element});
                 modificarPersonaje(VillanoModificar[0],[nombre,apellido,edad,enemigo,robos,asesinatos]);
             }
         }
@@ -327,7 +324,7 @@ function CargarTablas()
     tablaInformacion.innerHTML=""; 
     etiquetaError.style.display="none";
     CargarTitulos();
-    arrayFiltrado = arrayPersonas.filter(element => FiltrarPorComboBox(element));
+    arrayFiltrado = arrayVehiculos.filter(element => FiltrarPorComboBox(element));
     arrayFiltrado.map(element=>CrearRegistros(element));  
 }
 
@@ -411,111 +408,50 @@ function CargarTitulos()
 {
     let filaTitulos = document.createElement("tr");
     let celdaId = document.createElement("th");
-    let celdaNombre= document.createElement("th");
-    let celdaApellido = document.createElement("th");
-    let celdaEdad = document.createElement("th");
-    let celdaalterego = document.createElement("th");
-    let celdaCiudad =document.createElement("th");
-    let celdaPublicado = document.createElement("th");
-    let celdaEnemigo = document.createElement("th");
-    let celdaRobos = document.createElement("th");
-    let celdaAsesinatos = document.createElement("th");
+    let celdaModelo= document.createElement("th");
+    let celdaAnoFab = document.createElement("th");
+    let celdaVelMax = document.createElement("th");
+    let celdaAltaMax = document.createElement("th");
+    let celtaAutonomia =document.createElement("th");
+    let celdaCantPue = document.createElement("th");
+    let celdaCantRue = document.createElement("th");
     let celdaModificar = document.createElement("th");
     let celdaEliminar = document.createElement("th");
 
     filaTitulos.appendChild(celdaId);
-    filaTitulos.appendChild(celdaNombre);
-    filaTitulos.appendChild(celdaApellido);
-    filaTitulos.appendChild(celdaEdad);
-    filaTitulos.appendChild(celdaalterego);
-    filaTitulos.appendChild(celdaCiudad);
-    filaTitulos.appendChild(celdaPublicado);
-    filaTitulos.appendChild(celdaEnemigo);
-    filaTitulos.appendChild(celdaRobos);
-    filaTitulos.appendChild(celdaAsesinatos);
+    filaTitulos.appendChild(celdaModelo);
+    filaTitulos.appendChild(celdaAnoFab);
+    filaTitulos.appendChild(celdaVelMax);
+    filaTitulos.appendChild(celdaAltaMax);
+    filaTitulos.appendChild(celtaAutonomia);
+    filaTitulos.appendChild(celdaCantPue);
+    filaTitulos.appendChild(celdaCantRue);
     filaTitulos.appendChild(celdaModificar);
     filaTitulos.appendChild(celdaEliminar);
 
     celdaId.innerText="ID";
-    celdaNombre.innerText="Nombre";
-    celdaApellido.innerText="Apellido";
-    celdaEdad.innerText="Edad";
-    celdaalterego.innerText="alterego";
-    celdaCiudad.innerText="Ciudad";
-    celdaPublicado.innerText="Publicado";
-    celdaEnemigo.innerText="Enemigo";
-    celdaRobos.innerText="Robos";
-    celdaAsesinatos.innerText="Asesinatos";
+    celdaModelo.innerText="Modelo";
+    celdaAnoFab.innerText="Ano Fabricacion";
+    celdaVelMax.innerText="Velocidad Maxima";
+    celdaAltaMax.innerText="Altura Maxima";
+    celtaAutonomia.innerText="Autonomia";
+    celdaCantPue.innerText="Cantidad Puertas";
+    celdaCantRue.innerText="Cantidad Ruedas";
     celdaModificar.innerText="Modificar";
     celdaEliminar.innerText="Eliminar";
 
     tablaInformacion.appendChild(filaTitulos);
-    let titulosColumnas = document.querySelectorAll('th');
-    titulosColumnas.forEach(element => {
-    element.addEventListener("click",OrdernarColumnas);
-    });
 }
-
-//Calculos
-function CalcularEdadPromedio()
-{
-    let acumulador=0;
-    let arrayFiltrado = arrayPersonas.filter(element => FiltrarPorComboBox(element));
-    acumulador = arrayFiltrado.reduce((sumaParcial, a) => sumaParcial + a.edad, 0);
-    document.getElementById("textbox_calculo").value = (acumulador/arrayPersonas.length).toFixed(2);   
-}
-
-//Ordenamiento
-function OrdernarColumnas(e)
-{
-    let criterio = e.currentTarget.innerText;
-    criterio=criterio.toLowerCase();
-    
-    switch (criterio) {
-    case "id":
-        arrayPersonas = arrayPersonas.sort((a, b) => a.id - b.id);
-        break;
-    case "nombre":
-        arrayPersonas = arrayPersonas.sort((a,b) => (a.nombre> b.nombre) ? 1 : ((b.nombre > a.nombre) ? -1 : 0))
-        break;
-    case "apellido":
-        arrayPersonas = arrayPersonas.sort((a, b) => (a.apellido> b.apellido) ? 1 : ((b.apellido > a.apellido) ? -1 : 0))
-        break;
-    case "edad":
-        arrayPersonas = arrayPersonas.sort((a, b) => a.edad - b.edad);
-        break; 
-    case "alterego":
-        arrayPersonas = arrayPersonas.sort((a, b) => (a.alterego> b.alterego) ? 1 : ((b.alterego > a.alterego) ? -1 : 0))
-        break;
-    case "ciudad":
-        arrayPersonas = arrayPersonas.sort((a, b) => (a.ciudad> b.ciudad) ? 1 : ((b.ciudad > a.ciudad) ? -1 : 0))
-        break;
-    case "publicado":
-        arrayPersonas = arrayPersonas.sort((a,b)=>a.publicado-b.publicado);
-        break;
-    case "enemigo":
-        arrayPersonas = arrayPersonas.sort((a, b) => (a.enemigo> b.enemigo) ? 1 : ((b.enemigo > a.enemigo) ? -1 : 0))
-        break;
-    case "robos":
-        arrayPersonas = arrayPersonas.sort((a,b)=>a.robos-b.robos);
-        break;
-    case "asesinatos":
-        arrayPersonas = arrayPersonas.sort((a,b)=>a.asesinatos-b.asesinatos);
-        break;                                 
-    }
-    CargarTablas();
-}
-
 
 //Filtros
 function FiltrarPorComboBox(element){
     switch(comboBox.value){
         case "todos":
             return true;
-        case "heroes":
-            return(element instanceof(Heroe))
-        case "villanos":
-            return(element instanceof(Villano))
+        case "aereos":
+            return(element instanceof(Aereo))
+        case "terrestres":
+            return(element instanceof(Terrestre))
     }
 }
 
@@ -548,13 +484,13 @@ function MostrarOcultarForm()
 function OcultarCampos()
 {
     switch(comboBoxAlta.value){
-        case "heroes":
-            document.querySelector(".input_alta_heroe").style.visibility = "visible";
-            document.querySelector(".input_alta_villano").style.visibility = "hidden";
+        case "aereos":
+            document.querySelector(".input_alta_aereo").style.visibility = "visible";
+            document.querySelector(".input_alta_terrestre").style.visibility = "hidden";
             break;
-        case "villanos":
-            document.querySelector(".input_alta_heroe").style.visibility = "hidden";
-            document.querySelector(".input_alta_villano").style.visibility = "visible";
+        case "terrestres":
+            document.querySelector(".input_alta_aereo").style.visibility = "hidden";
+            document.querySelector(".input_alta_terrestre").style.visibility = "visible";
             break;
     }
 }
