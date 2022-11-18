@@ -25,7 +25,9 @@ function traerVehiculos()
                 MostrarSpinner(false);
                 CargaInformacionJSON();         
             }).catch(err => {
-                alert (err);
+                mensajeErrorForm.innerText=err;
+                mensajeErrorForm.style.display= "flex";
+                MostrarSpinner(false);
                 MostrarOcultarForm();  
             }) 
         }else{
@@ -35,8 +37,13 @@ function traerVehiculos()
             setTimeout(()=>{
                 mensajeErrorForm.style.display= "none";
             },3000);
-        }
-    }).catch(err=>alert(err));
+        }   
+    }).catch(err=> {
+        mensajeErrorForm.innerText=err;
+        mensajeErrorForm.style.display= "flex";
+        MostrarSpinner(false);
+        MostrarOcultarForm();
+    } );
 };
 
 
