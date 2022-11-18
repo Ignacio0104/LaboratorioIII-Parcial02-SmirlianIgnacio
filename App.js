@@ -1,6 +1,45 @@
 //Array original
 let arrayJson;
-let arrayPersonas=[];
+let arrayVehiculos=[];
+
+function traerVehiculos()
+{
+    MostrarSpinner(true);
+    let consulta = fetch('http://localhost/vehiculoAereoTerrestre.php',{
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers :{
+            'Content-Type' : 'application/json'
+        },
+        redirect: "follow",
+        referrerPolicy : "no-referrer", 
+        //body: JSON.stringify(personaje)
+    });
+    consulta.then(respuesta=>{
+        MostrarSpinner(false);
+        if(respuesta.status==200)
+        {
+            respuesta.json().then(objetoEnJson =>{
+                arrayJson = objetoEnJson; 
+                MostrarSpinner(false);
+                CargaInformacionJSON();         
+            }).catch(err => {
+                alert (err);
+                MostrarOcultarForm();  
+            }) 
+        }else{
+            mensajeErrorForm.innerText="Error, no se pudo realizar la carga de datos!";
+            mensajeErrorForm.style.display= "flex"; 
+            MostrarOcultarForm(); 
+            setTimeout(()=>{
+                mensajeErrorForm.style.display= "none";
+            },3000);
+        }
+    }).catch(err=>alert(err));
+};
+
 
 function traerPersonajes(){
     MostrarSpinner(true);
@@ -27,43 +66,6 @@ xhttp.open("GET","http://localhost/personajes.php",true,"usuarios","pass");
 xhttp.send();
 };
 
-function cargarPersonaje(personaje)
-{
-    MostrarSpinner(true);
-    let consulta = fetch('http://localhost/personajes.php',{
-        method: "PUT",
-        mode: "cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        headers :{
-            'Content-Type' : 'application/json'
-        },
-        redirect: "follow",
-        referrerPolicy : "no-referrer", 
-        body: JSON.stringify(personaje)
-    });
-    consulta.then(respuesta=>{
-        MostrarSpinner(false);
-        if(respuesta.status==200)
-        {
-            respuesta.json().then(objetoEnJson =>{
-                personaje.id=JSON.parse(objetoEnJson["id"]);
-                arrayPersonas.push(personaje);
-                MostrarOcultarForm();       
-            }).catch(err => {
-                alert (err);
-                MostrarOcultarForm();  
-            }) 
-        }else{
-            mensajeErrorForm.innerText="Error, no se pudo realizar el alta!";
-            mensajeErrorForm.style.display= "flex"; 
-            MostrarOcultarForm(); 
-            setTimeout(()=>{
-                mensajeErrorForm.style.display= "none";
-            },3000);
-        }
-    }).catch(err=>alert(err));
-};
 
 async function modificarPersonaje(personaje,atributos)
 {
@@ -176,14 +178,15 @@ botonEliminar.addEventListener("click",EliminarRegistro)
 function CargaInformacionJSON()
 {
     arrayJson.forEach(element => {
-        if(element.hasOwnProperty("alterego"))
+        if(element.hasOwnProperty("altMax"))
         {
-            let nuevoHeroe = new Heroe(element["id"],element["nombre"],element["apellido"],element["edad"],
-            element["alterego"],element["ciudad"],element["publicado"])
-            arrayPersonas.push(nuevoHeroe);
+            let nuevoAereo = new Aereo(element["id"],element["modelo"],element["anoFab"],element["velMax"],
+            element["altMax"],element["autonomia"])
+            arrayVehiculos.push(nuevoAereo);
         }else{
-            let nuevoVillano = new Villano(element["id"],element["nombre"],element["apellido"],element["edad"],element["enemigo"],element["robos"],element["asesinatos"]);
-            arrayPersonas.push(nuevoVillano);
+            let nuevoTerrestre = new Terrestre(element["id"],element["modelo"],element["anoFab"],element["velMax"],
+            element["cantPue"],element["cantRue"]);
+            arrayVehiculos.push(nuevoTerrestre);
         }
     });
     MostrarOcultarForm();
@@ -362,15 +365,13 @@ function CrearRegistros(element)
 {
     let filaTabla = document.createElement("tr");
     let celdaId = document.createElement("td");
-    let celdaNombre= document.createElement("td");
-    let celdaApellido = document.createElement("td");
-    let celdaEdad = document.createElement("td");
-    let celdaalterego = document.createElement("td");
-    let celdaCiudad =document.createElement("td");
-    let celdaPublicado = document.createElement("td");
-    let celdaEnemigo = document.createElement("td");
-    let celdaRobos = document.createElement("td");
-    let celdaAsesinatos = document.createElement("td");
+    let celdaModelo= document.createElement("td");
+    let celdaAnoFab = document.createElement("td");
+    let celdaVelMax = document.createElement("td");
+    let celdaAltMax = document.createElement("td");
+    let celdaAutonomia =document.createElement("td");
+    let celdaCantPue = document.createElement("td");
+    let centaCantRue = document.createElement("td");
     let celdaModificar = document.createElement("td");
     let celdaEliminar = document.createElement("td");
 
@@ -379,35 +380,29 @@ function CrearRegistros(element)
     let botonEliminar = document.createElement("button");
     botonEliminar.innerText="Eliminar"
     filaTabla.appendChild(celdaId);
-    filaTabla.appendChild(celdaNombre);
-    filaTabla.appendChild(celdaApellido);
-    filaTabla.appendChild(celdaEdad);
-    filaTabla.appendChild(celdaalterego);
-    filaTabla.appendChild(celdaCiudad);
-    filaTabla.appendChild(celdaPublicado);
-    filaTabla.appendChild(celdaEnemigo);
-    filaTabla.appendChild(celdaRobos);
-    filaTabla.appendChild(celdaAsesinatos);
+    filaTabla.appendChild(celdaModelo);
+    filaTabla.appendChild(celdaAnoFab);
+    filaTabla.appendChild(celdaVelMax);
+    filaTabla.appendChild(celdaAltMax);
+    filaTabla.appendChild(celdaAutonomia);
+    filaTabla.appendChild(celdaCantPue);
+    filaTabla.appendChild(centaCantRue);
     filaTabla.appendChild(celdaModificar);
     filaTabla.appendChild(celdaEliminar);
     botonModificar.addEventListener("click",() =>AbrirFormModificacion(filaTabla, "mod"));
     botonEliminar.addEventListener("click",() =>AbrirFormModificacion(filaTabla, "sup"));
 
-    
     celdaId.innerText=element.id;
-    celdaNombre.innerText=element.nombre;   
-    celdaApellido.innerText=element.apellido;   
-    celdaEdad.innerText=element.edad;
-    celdaalterego.innerText= element instanceof Heroe ? element.alterego : "N/A"   
-    celdaCiudad.innerText=element instanceof Heroe ? element.ciudad : "N/A"   
-    celdaPublicado.innerText=element instanceof Heroe ? element.publicado : "N/A"   
-    celdaEnemigo.innerText= element instanceof Villano ? element.enemigo : "N/A"   
-    celdaRobos.innerText=element instanceof Villano ? element.robos : "N/A"   
-    celdaAsesinatos.innerText=element instanceof Villano ? element.asesinatos : "N/A"
+    celdaModelo.innerText=element.modelo;   
+    celdaAnoFab.innerText=element.anoFab;   
+    celdaVelMax.innerText=element.velMax;
+    celdaAltMax.innerText= element instanceof Aereo ? element.altMax : "N/A"   
+    celdaAutonomia.innerText=element instanceof Aereo ? element.autonomia : "N/A"   
+    celdaCantPue.innerText=element instanceof Terrestre ? element.cantPue : "N/A"   
+    centaCantRue.innerText= element instanceof Terrestre ? element.cantRue : "N/A"   
     celdaModificar.appendChild(botonModificar);
     celdaEliminar.appendChild(botonEliminar);
-
-    
+   
     tablaInformacion.appendChild(filaTabla);
 }
 
@@ -636,7 +631,7 @@ class Terrestre extends Vehiculo {
         this.modelo=modelo;
         this.anoFab=anoFab;
         this.velMax=velMax;
-        this.cantPue=altMcantPueax;
+        this.cantPue=cantPue;
         this.cantRue=cantRue;
     }
 }
