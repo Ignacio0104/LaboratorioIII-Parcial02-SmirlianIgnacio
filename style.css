@@ -153,6 +153,7 @@ table {
     height: auto;
     font-family: 'Raleway', sans-serif;
     color: #ffba08;
+    width: 100%;
 }
 
 #agregar_btn{

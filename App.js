@@ -15,7 +15,6 @@ function traerVehiculos()
         },
         redirect: "follow",
         referrerPolicy : "no-referrer", 
-        //body: JSON.stringify(personaje)
     });
     consulta.then(respuesta=>{
         MostrarSpinner(false);
@@ -140,7 +139,6 @@ let formularioVisible=true;
 let body = document.querySelector("body");
 let comboBox = document.getElementById("select_filtro");
 let tablaInformacion = document.getElementById("tabla");
-let botonCalculo = document.getElementById("calcular_btn");
 let botonAgregar = document.getElementById("agregar_btn");
 let comboBoxAlta = document.getElementById("select_tipo");
 let botonAlta = document.getElementById("alta_btn");
@@ -231,7 +229,7 @@ function ValidarCampos(id,modelo,anoFab,velMax,altaMax,autonomia,cantPue,cantRue
         }  
     }else
     {
-        if(isNaN(cantPue)||cantPue<1){
+        if(isNaN(cantPue)||cantPue<0){
             etiquetaError.style.display="flex";
             etiquetaError.innerText="Revisar la cantidad de puertas";
             return false;
@@ -329,7 +327,7 @@ function AbrirFormModificacion(fila,tipo)
         comboBoxAlta.value="aereos";
     }
     comboBoxAlta.disabled = true;
-    MostrarOcultarForm()
+    MostrarOcultarForm();
     document.getElementById("input_id").value= fila.cells[0].innerText;
     document.getElementById("input_modelo").value =fila.cells[1].innerText;
     document.getElementById("input_anoFab").value =fila.cells[2].innerText;
@@ -364,7 +362,9 @@ function CrearRegistros(element)
 
     let botonModificar = document.createElement("button");
     botonModificar.innerText="Modificar"
+    botonModificar.classList.add("button_style");
     let botonEliminar = document.createElement("button");
+    botonEliminar.classList.add("button_style");
     botonEliminar.innerText="Eliminar"
     filaTabla.appendChild(celdaId);
     filaTabla.appendChild(celdaModelo);
@@ -462,7 +462,7 @@ function MostrarOcultarForm()
         OcultarCampos()
         document.querySelector(".container_formulario").style.display="block";
         document.querySelector(".container_tabla").style.display="none";
-        botonAgregar.innerText = "Ocultar";
+        botonAgregar.innerText = "Cancelar";
         formularioVisible=true;
         botonAlta.style.display="inherit";
         botonCancelar.style.display="none";
@@ -506,7 +506,6 @@ class Vehiculo{
     }
    
 }
-
 
 class Aereo extends Vehiculo{
     
