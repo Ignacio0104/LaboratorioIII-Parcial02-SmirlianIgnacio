@@ -44,7 +44,7 @@ function cargarVehiculo(vehiculo){
     MostrarSpinner(true);
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
-        if(xhttp.readyState ==4) //Se espera a llegar al estado 4 y despues se valida el estado 200
+        if(xhttp.readyState ==4)
         {
             if(xhttp.status == 200 )
             {

@@ -1,10 +1,10 @@
 body{
-    background: linear-gradient(149deg, rgba(2,9,51,1) 5%, rgba(140,5,20,1) 61%, rgba(187,79,10,0.8939950980392157) 100%);
+    background: linear-gradient(149deg, #177e89 5%, #084c61 61%, #99d5c9 100%);
 }
 
 #titulo{
     display: flex;
-    color: #ffba08;
+    color: #ffc857;
     font-family: 'Silkscreen', cursive; 
 }
 
@@ -16,7 +16,7 @@ body{
 .containerErrores{
     font-family: 'Raleway', sans-serif;
     margin-left: 20px;
-    color: #ffba08;
+    color: #ffc857;
     display: none;
     justify-content: center;
 }
@@ -29,11 +29,11 @@ body{
     outline:0;
     box-shadow:none;
     border:0!important;
-    background: #03071e;
+    background: #323031;
     background-image: none;
     flex: 1;
     padding: 0 .5em;
-    color:#ffba08;
+    color:#ffc857;
     cursor:pointer;
     font-size: 1em;
     font-family: 'Raleway', sans-serif;
@@ -48,7 +48,7 @@ body{
     width: 20em;
     height: 3em;
     line-height: 3;
-    background: #03071e;
+    background: #323031;
     overflow: hidden;
     border-radius: .25em;
  }
@@ -75,20 +75,20 @@ body{
 #textbox_calculo{
     width: 10em;
     line-height: 2;
-    background: #03071e;
+    background: #323031;
     overflow: hidden;
     border-radius: .25em;
     margin-left: 15px;
-    color:#ffba08;
+    color:#ffc857;
     font-family: 'Raleway', sans-serif;
     text-align: center;
     font-weight: bold;
 }
 
 .button_style {
-  background-color: #ffba08;
+  background-color: #ffc857;
   border-radius: 100px;
-  color: #03071e;
+  color: #323031;
   cursor: pointer;
   display: inline-block;
   font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
@@ -111,7 +111,7 @@ body{
 .tituloInline{
     font-family: 'Raleway', sans-serif;
     margin-left: 20px;
-    color: #ffba08;
+    color: #ffc857;
 }
 
 #selector_columnas{
@@ -122,15 +122,15 @@ body{
     padding: 20px;
     max-width:fit-content;
     margin: 10px;
-    box-shadow: 10px 5px 5px #ffba08;   
+    box-shadow: 10px 5px 5px #ffc857;   
 }
 
 table th{
     font-family: 'Fredoka One', cursive;
-    background-color: #03071e;
-    border: solid 1px #ffba08;
+    background-color: #323031;
+    border: solid 1px #ffc857;
     cursor:pointer;
-    color: #ffba08;
+    color: #ffc857;
 }
 table{
     border: 1;
@@ -138,21 +138,21 @@ table{
 }
 
 td{
-    border: solid 1px #ffba08;
+    border: solid 1px #ffc857;
     text-align: -internal-center;
     text-align: center;
     width: 100px;
 }
 
 tr:hover{
-    background-color:#03071e;
+    background-color:#323031;
 }
 
 table {
     border-spacing: 0px;
     height: auto;
     font-family: 'Raleway', sans-serif;
-    color: #ffba08;
+    color: #ffc857;
     width: 100%;
 }
 
@@ -203,16 +203,16 @@ form{
     -webkit-backdrop-filter: blur(5.8px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     font-family: 'Silkscreen', cursive; 
-    color: #ffba08;
+    color: #ffc857;
 }
 
 form input{
     line-height: 2;
-    background: #03071e;
+    background: #323031;
     overflow: hidden;
     border-radius: .25em;
     margin-left: 15px;
-    color:#ffba08;
+    color:#ffc857;
     font-family: 'Raleway', sans-serif;
     text-align: center;
     font-weight: bold;
@@ -231,7 +231,7 @@ form input{
 
 #mensaje_error{
     font-family: 'Raleway', sans-serif;
-    color: #ffba08;
+    color: #ffc857;
     font-style: italic;
     justify-content: center;
     display: none;
